@@ -18,6 +18,7 @@ export const env = createEnv({
     ),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
+    OPEN_AI_API_KEY: z.string(),
   },
 
   client: {
@@ -31,6 +32,7 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+    OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

@@ -18,7 +18,9 @@ export const CandidateSchema = z.object({
   github: z.string().nullable(),
   website: z.string().nullable(),
   city: z.string().nullable(),
-  grade: z.number().nullable(),
+  stars: z.number().nullable(),
+  points: z.number().nullable(),
+  status: z.string().default("applied"),
   skills: z.array(z.string()),
 });
 

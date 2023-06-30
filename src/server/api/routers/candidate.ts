@@ -17,7 +17,9 @@ export const candidateRouter = createTRPCRouter({
           github: input.github,
           website: input.website,
           city: input.city,
-          grade: input.grade,
+          stars: input.stars,
+          status: input.status,
+          points: input.points,
           skills: {
             create: input.skills.map((skillName) => {
               return {
