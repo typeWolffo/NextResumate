@@ -20,7 +20,7 @@ export const CandidateSchema = z.object({
   city: z.string().nullable(),
   stars: z.number().nullable(),
   points: z.number().nullable(),
-  status: z.string().default("applied"),
+  status: z.enum(["applied", "need_information", "graded"]).default("applied"),
   skills: z.array(z.string()),
 });
 
