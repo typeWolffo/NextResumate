@@ -1,6 +1,18 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
+const EmailSchema = z.string().email();
+
+const CommaSeparatedEmailsSchema = z.string().refine(
+  (str) => {
+    const emails = str.split(",");
+    return emails.every((email) => EmailSchema.safeParse(email).success);
+  },
+  {
+    message: "Invalid email format",
+  }
+);
+
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
@@ -22,7 +34,7 @@ export const env = createEnv({
   },
 
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+    NEXT_PUBLIC_ADMIN_EMAILS: CommaSeparatedEmailsSchema,
   },
 
   runtimeEnv: {
@@ -33,6 +45,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
+    NEXT_PUBLIC_ADMIN_EMAILS: process.env.NEXT_PUBLIC_ADMIN_EMAILS,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

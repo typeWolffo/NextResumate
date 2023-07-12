@@ -12,7 +12,7 @@ export const userRouter = createTRPCRouter({
    *
    */
   updateUserRole: protectedProcedure
-    .input(z.object({ id: z.string(), role: UserRoleSchema }))
+    .input(z.object({ email: z.string(), role: UserRoleSchema }))
     .mutation(({ ctx, input }) => {
       if (ctx.session?.user?.role) {
         throw new TRPCError({
@@ -23,7 +23,7 @@ export const userRouter = createTRPCRouter({
 
       return ctx.prisma.user.update({
         where: {
-          id: input.id,
+          email: input.email,
         },
         data: {
           role: input.role,

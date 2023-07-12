@@ -6,7 +6,6 @@ import { getSession } from "next-auth/react";
 
 const redirectUrl = {
   signin: "/signin",
-  welcome: "/welcome",
 };
 
 type GetServerSidePropsResultType = Record<string, unknown>;
@@ -30,21 +29,13 @@ function withSession(
       };
     }
 
-    if (!session?.user.role && req.url !== redirectUrl.welcome) {
-      return {
-        redirect: {
-          destination: redirectUrl.welcome,
-          permanent: false,
-        },
-      };
-    }
-
-    let propsResult: GetServerSidePropsFuncType = {
+    const propsResult: GetServerSidePropsFuncType = {
       props: {},
     };
 
     if (getServerSidePropsFunc) {
-      propsResult = await getServerSidePropsFunc(context);
+      const result = await getServerSidePropsFunc(context);
+      Object.assign(propsResult, result);
     }
 
     if ("props" in propsResult && !("then" in propsResult.props)) {

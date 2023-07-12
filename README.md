@@ -4,11 +4,18 @@ The app features a user-friendly interface where recruiters can preview candidat
 
 ---
 
-## Setup project
+### Setup project
 
 1. `cp .env.example .env`
 2. `yarn install`
 
-## Database seed
+##### Login as admin
+
+To login as admin, add admin email to `NEXT_PUBLIC_ADMIN_EMAILS` environment variable in `.env` file.
+You can add multiple emails separated by comma. For example: `example@example.com,example2@example.com`
+
+---
+
+### Database seed
 
 - `yarn db-seed`
