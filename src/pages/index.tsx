@@ -1,9 +1,8 @@
+import { withSession } from "@/HOC";
 import { DashboardTopbar } from "@/components";
 import FiltersContext from "@/contexts/FliterContext";
 import ManagedUIProvider from "@/contexts/ManagedUiContext";
-import { getSession } from "next-auth/react";
 import Head from "next/head";
-import { type GetServerSidePropsContext } from "next/types";
 
 export default function Home() {
   return (
@@ -20,19 +19,4 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const { req } = context;
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: { destination: "/signin" },
-    };
-  }
-
-  return {
-    props: { isAuthenticated: Boolean(session) },
-  };
-};
+export const getServerSideProps = withSession();

@@ -1,3 +1,5 @@
+import { withSession } from "@/HOC";
+
 function Settings() {
   return (
     <div>
@@ -7,3 +9,5 @@ function Settings() {
 }
 
 export default Settings;
+
+export const getServerSideProps = withSession();

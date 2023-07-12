@@ -45,7 +45,6 @@ export const createTRPCRouter = t.router;
 
 export const publicProcedure = t.procedure;
 
-//TODO RBAC procedures
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
