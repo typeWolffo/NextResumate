@@ -1,5 +1,6 @@
 import { env } from "@/env.mjs";
 import { prisma } from "@/server/db";
+import { type UserRole } from "@/types/User";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { type GetServerSidePropsContext } from "next";
 import {
@@ -13,13 +14,13 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      // role: UserRole; //TODO RBAC
+      role: UserRole;
     } & DefaultSession["user"];
   }
 
-  // interface User {
-  // role: UserRole;
-  // }
+  interface User {
+    role: UserRole;
+  }
 }
 
 export const authOptions: NextAuthOptions = {
@@ -29,6 +30,7 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
+        role: user.role,
       },
     }),
     // eslint-disable-next-line @typescript-eslint/require-await
