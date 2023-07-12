@@ -23,7 +23,6 @@ type SignInProps = {
 };
 
 const SignIn: React.FC<SignInProps> = ({ providers }) => {
-  console.log(providers);
   return (
     <div className="relative h-screen w-screen bg-slate-800">
       <Image
