@@ -1,5 +1,5 @@
 import { prisma } from "@/server/db";
-import { type CandidateType } from "@/types/CandidateType";
+import { type CandidateType } from "@/types/Candidate";
 import { faker } from "@faker-js/faker";
 
 const createCandidate: Promise<CandidateType[]> = new Promise(
