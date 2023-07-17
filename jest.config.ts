@@ -1,3 +1,9 @@
+import nextJest from "next/jest";
+
+const createJestConfig = nextJest({
+  dir: "./",
+});
+
 const config = {
   clearMocks: true,
   coverageProvider: "v8",
@@ -9,6 +15,7 @@ const config = {
   moduleNameMapper: {
     "@/(.*)": ["<rootDir>/src/$1"],
   },
+  testEnvironment: "jsdom",
 };
 
-export default config;
+module.exports = createJestConfig(config);

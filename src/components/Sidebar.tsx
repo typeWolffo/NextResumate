@@ -8,11 +8,10 @@ import MobileIcon from "public/icons/mobile.svg";
 import SelleoLogoIcon from "public/icons/new-selleo-logo.svg";
 import PaletteIcon from "public/icons/palette.svg";
 import SettingsIcon from "public/icons/settings.svg";
-import { type ComponentType } from "react";
 
 type SidebarElement = {
   href: string;
-  icon: ComponentType<React.SVGProps<SVGSVGElement>>;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
 };
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -41,9 +40,9 @@ function Sidebar() {
         </Link>
         {sidebarElements.map(({ href, icon: Icon }, index) => (
           <Link
+            className={getNavItemClasses(href)}
             href={href}
             key={`${index}-${href}`}
-            className={getNavItemClasses(href)}
           >
             <Icon className="text-white" />
           </Link>
