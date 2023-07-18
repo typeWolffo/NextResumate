@@ -11,6 +11,7 @@ export const CandidateSchema = z.object({
   updatedAt: z.date().optional(),
   name: z.union([z.string(), z.literal("N/A")]),
   surname: z.union([z.string(), z.literal("N/A")]),
+  bio: z.union([z.string(), z.literal("N/A")]),
   favourite: z.boolean(),
   englishLvl: z.union([z.string(), z.literal("N/A")]),
   age: z.union([z.string(), z.literal("N/A")]),

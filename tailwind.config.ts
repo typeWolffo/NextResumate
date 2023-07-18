@@ -3,7 +3,14 @@ import { type Config } from "tailwindcss";
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    container: {
+      center: true,
+      screens: {
+        lg: "1200px",
+      },
+    },
     fontSize: {
+      xs: "8px",
       sm: "14px",
       base: "16px",
       md: "18px",
@@ -13,6 +20,12 @@ export default {
       xxl: "48px",
       xxlr: "56px",
       xxxl: "72px",
+    },
+    letterSpacing: {
+      14: "0.14px",
+    },
+    boxShadow: {
+      100: "0px 0px 16px 0px rgba(47, 48, 51, 0.05), 0px 32px 72px 0px rgba(47, 48, 51, 0.07);",
     },
     extend: {
       colors: {
@@ -38,5 +51,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 } satisfies Config;

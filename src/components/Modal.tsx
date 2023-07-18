@@ -9,19 +9,28 @@ const modalVariants = {
   exit: { opacity: 0, scale: 0.9, backdropFilter: "blur(0px)" },
 };
 
-function Modal({ children }: PropsWithChildren) {
-  const { setIsModalOpen } = useManagedUIContext();
+type ModalProps = PropsWithChildren & {
+  id: string;
+};
+
+function Modal({ id, children }: ModalProps) {
+  const { modals, closeModal } = useManagedUIContext();
   const modalRef = useRef<HTMLDivElement>(null);
-  const closeModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+
+  const handleClose = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (modalRef.current === e.target) {
-      setIsModalOpen(false);
+      closeModal(id);
     }
   };
+
+  if (!modals[id]) {
+    return null;
+  }
 
   return createPortal(
     <motion.div
       className="absolute inset-0 z-50 flex h-screen w-screen items-center justify-center bg-black/20"
-      onClick={closeModal}
+      onClick={handleClose}
       ref={modalRef}
       initial="hidden"
       animate="visible"

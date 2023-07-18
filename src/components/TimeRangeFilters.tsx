@@ -1,4 +1,4 @@
-import { timeRangeFiters, useFiltersContext } from "@/contexts/FliterContext";
+import { timeRangeFiters, useFiltersContext } from "@/contexts/FilterContext";
 import cx from "classnames";
 import { motion } from "framer-motion";
 

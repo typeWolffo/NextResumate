@@ -22,6 +22,7 @@ export const candidateRouter = createTRPCRouter({
         data: {
           name: input.name,
           surname: input.surname,
+          bio: input.bio,
           favourite: input.favourite,
           englishLvl: input.englishLvl,
           age: input.age,
