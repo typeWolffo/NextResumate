@@ -2,7 +2,7 @@ import { FileDropZone, Modal, TimeRangeFilters } from "@/components";
 import { useManagedUIContext } from "@/contexts/ManagedUiContext";
 
 function DashboardTopbar() {
-  const { isModalOpen, setIsModalOpen } = useManagedUIContext();
+  const { openModal } = useManagedUIContext();
 
   return (
     <>
@@ -15,7 +15,7 @@ function DashboardTopbar() {
         </div>
         <div className="flex h-1/2 gap-x-4">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => openModal("file-drop-zone")}
             className="rounded-lg border border-brand-primary-500 bg-brand-primary-500 px-4 text-lg font-extrabold text-white transition-colors hover:bg-brand-primary-600"
           >
             &#43;
@@ -33,13 +33,11 @@ function DashboardTopbar() {
           </button>
         </div>
       </div>
-      {isModalOpen && (
-        <Modal>
-          <div className="rounded-lg bg-white p-6">
-            <FileDropZone />
-          </div>
-        </Modal>
-      )}
+      <Modal id="file-drop-zone">
+        <div className="rounded-lg bg-white p-6">
+          <FileDropZone />
+        </div>
+      </Modal>
     </>
   );
 }

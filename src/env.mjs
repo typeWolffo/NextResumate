@@ -13,6 +13,16 @@ const CommaSeparatedEmailsSchema = z.string().refine(
   }
 );
 
+const DesiredSkills = z.string().refine(
+  (str) => {
+    const skills = str.split(",");
+    return skills.every((skill) => z.string().safeParse(skill).success);
+  },
+  {
+    message: "Invalid skills format",
+  }
+);
+
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
@@ -34,7 +44,8 @@ export const env = createEnv({
   },
 
   client: {
-    NEXT_PUBLIC_ADMIN_EMAILS: CommaSeparatedEmailsSchema,
+    NEXT_PUBLIC_MASTER_ADMIN_EMAIL: z.string().email(),
+    NEXT_PUBLIC_DESIRED_SKILLS: DesiredSkills,
   },
 
   runtimeEnv: {
@@ -45,7 +56,8 @@ export const env = createEnv({
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
-    NEXT_PUBLIC_ADMIN_EMAILS: process.env.NEXT_PUBLIC_ADMIN_EMAILS,
+    NEXT_PUBLIC_MASTER_ADMIN_EMAIL: process.env.NEXT_PUBLIC_MASTER_ADMIN_EMAIL,
+    NEXT_PUBLIC_DESIRED_SKILLS: process.env.NEXT_PUBLIC_DESIRED_SKILLS,
   },
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
 });

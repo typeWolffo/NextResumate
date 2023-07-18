@@ -10,6 +10,7 @@ const createCandidate: Promise<CandidateType[]> = new Promise(
         id: i,
         name: faker.person.firstName(),
         surname: faker.person.lastName(),
+        bio: faker.lorem.paragraphs({ min: 2, max: 9 }),
         favourite: faker.datatype.boolean(),
         englishLvl: i % 3 === 0 ? "B1" : i % 3 === 1 ? "A2" : "B2",
         age: String(faker.number.int({ min: 18, max: 50 })),
@@ -49,6 +50,12 @@ const createCandidate: Promise<CandidateType[]> = new Promise(
           "Cypress",
           "Git",
           "GitHub",
+          "Karate",
+          "Java",
+          "Cobol",
+          "C",
+          "Driving license Cat B",
+          "MS Office",
         ]),
       };
       candidates.push(candidateShape);

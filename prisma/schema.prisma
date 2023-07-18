@@ -65,6 +65,7 @@ model Candidate {
   updatedAt  DateTime          @updatedAt @map("updated_at")
   name       String
   surname    String
+  bio        String
   favourite  Boolean           @default(false)
   englishLvl String
   age        String

@@ -1,8 +1,9 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 
 type ManagedUIContextType = {
-  isModalOpen: boolean;
-  setIsModalOpen: (open: boolean) => void;
+  modals: { [id: string]: boolean };
+  openModal: (id: string) => void;
+  closeModal: (id: string) => void;
 };
 
 function createCtx<ContextType extends object | null>() {
@@ -23,9 +24,12 @@ export const [useManagedUIContext, ManagedUIContextProvider] =
   createCtx<ManagedUIContextType>();
 
 function ManagedUIProvider({ children }: { children: ReactNode }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modals, setModals] = useState({});
 
-  const value = { isModalOpen, setIsModalOpen };
+  const openModal = (id: string) => setModals({ ...modals, [id]: true });
+  const closeModal = (id: string) => setModals({ ...modals, [id]: false });
+
+  const value = { modals, openModal, closeModal };
 
   return (
     <ManagedUIContextProvider value={value}>

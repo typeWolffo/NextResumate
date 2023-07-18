@@ -12,12 +12,15 @@ export const userRouter = createTRPCRouter({
    *
    */
   updateUserRole: protectedProcedure
-    .input(z.object({ email: z.string(), role: UserRoleSchema }))
+    .input(z.object({ email: z.string().email(), role: UserRoleSchema }))
     .mutation(({ ctx, input }) => {
-      if (ctx.session?.user?.role) {
+      if (
+        ctx.session?.user?.email === input.email &&
+        ctx.session?.user?.role === "ADMIN"
+      ) {
         throw new TRPCError({
           code: "BAD_REQUEST",
-          message: "You can not change your role once it has been set.",
+          message: "Admin cannot change their own role to lower role",
         });
       }
 

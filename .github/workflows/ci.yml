@@ -20,7 +20,6 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        # run: echo "::set-output name=dir::$(yarn cache dir)"
         run: echo "dir=$(yarn cache dir)" >>$GITHUB_OUTPUT
 
       - name: Cache dependencies
@@ -36,6 +35,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Generate Prisma Client
+        run: yarn prisma generate
+
       - name: Build the app
         run: yarn build
         env:
@@ -45,4 +47,5 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
-          NEXT_PUBLIC_ADMIN_EMAILS: ${{ secrets.NEXT_PUBLIC_ADMIN_EMAILS }}
+          NEXT_PUBLIC_MASTER_ADMIN_EMAIL: ${{ secrets.NEXT_PUBLIC_MASTER_ADMIN_EMAIL}}
+          NEXT_PUBLIC_DESIRED_SKILLS: ${{ secrets.NEXT_PUBLIC_DESIRED_SKILLS }}

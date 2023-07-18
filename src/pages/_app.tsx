@@ -1,4 +1,9 @@
 import { Layout } from "@/components";
+import {
+  FilterContext,
+  ManagedUIProvider,
+  UserRoleUpdateProvider,
+} from "@/contexts";
 import "@/styles/globals.css";
 import { api } from "@/utils/api";
 import { type Session } from "next-auth";
@@ -11,9 +16,15 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <UserRoleUpdateProvider>
+        <Layout>
+          <FilterContext>
+            <ManagedUIProvider>
+              <Component {...pageProps} />
+            </ManagedUIProvider>
+          </FilterContext>
+        </Layout>
+      </UserRoleUpdateProvider>
     </SessionProvider>
   );
 };

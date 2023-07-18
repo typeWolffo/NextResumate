@@ -11,8 +11,7 @@ The app features a user-friendly interface where recruiters can preview candidat
 
 ##### Login as admin
 
-To login as admin, add admin email to `NEXT_PUBLIC_ADMIN_EMAILS` environment variable in `.env` file.
-You can add multiple emails separated by comma. For example: `example@example.com,example2@example.com`
+To login as admin, add admin email to `NEXT_PUBLIC_MASTER_ADMIN_EMAIL` environment variable in `.env` file.
 
 ---
 
