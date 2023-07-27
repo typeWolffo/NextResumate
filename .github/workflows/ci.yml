@@ -45,3 +45,4 @@ jobs:
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY }}
+          NEXT_PUBLIC_ADMIN_EMAILS: ${{ secrets.NEXT_PUBLIC_ADMIN_EMAILS }}
