@@ -63,15 +63,15 @@ model Candidate {
   id         Int               @id @default(autoincrement())
   createdAt  DateTime          @default(now()) @map("created_at")
   updatedAt  DateTime          @updatedAt @map("updated_at")
-  name       String?
-  surname    String?
-  favourite  Boolean?          @default(false)
-  englishLvl String?
-  age        String?
+  name       String
+  surname    String
+  favourite  Boolean           @default(false)
+  englishLvl String
+  age        String
   studies    String?
-  github     String?
-  website    String?
-  city       String?
+  github     String
+  website    String
+  city       String
   stars      Int?
   points     Int?
   status     String
