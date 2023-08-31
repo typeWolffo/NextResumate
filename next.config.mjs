@@ -8,6 +8,9 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: ["picsum.photos"],
+  },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find(
       (/** @type {{ test: { test: (arg0: string) => any; }; }} */ rule) =>

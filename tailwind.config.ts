@@ -1,4 +1,5 @@
 import { type Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
@@ -22,12 +23,17 @@ export default {
       xxxl: "72px",
     },
     letterSpacing: {
+      ...defaultTheme.letterSpacing,
+      kicker: "2.4px",
       14: "0.14px",
     },
     boxShadow: {
-      100: "0px 0px 16px 0px rgba(47, 48, 51, 0.05), 0px 32px 72px 0px rgba(47, 48, 51, 0.07);",
+      100: "0px 0px 16px 0px rgba(47, 48, 51, 0.05), 0px 32px 72px 0px rgba(47, 48, 51, 0.07)",
     },
     extend: {
+      fontFamily: {
+        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         black: "#2F3033",
         brand: {
