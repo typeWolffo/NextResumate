@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 function CandidatePage() {
   const { query } = useRouter();
 
-  if (!query.id) {
+  if (!query.id || Array.isArray(query.id)) {
     return null;
   }
 
@@ -16,11 +16,11 @@ function CandidatePage() {
         <title>ResuMate | Candidate #{query.id}</title>
         <meta
           property="og:title"
-          content={`Candidate ${query.id.toString()}`}
+          content={`Candidate ${query.id}`}
           key="title"
         />
       </Head>
-      <CandidatePreview id={Number(query.id)} />
+      <CandidatePreview id={query.id} />
     </>
   );
 }

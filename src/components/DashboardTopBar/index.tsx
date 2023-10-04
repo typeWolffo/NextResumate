@@ -34,7 +34,7 @@ function DashboardTopbar() {
         </div>
       </div>
       <Modal id="file-drop-zone">
-        <div className="rounded-lg bg-white p-6">
+        <div className="mx-auto max-h-screen rounded-lg bg-white p-6">
           <FileDropZone />
         </div>
       </Modal>
