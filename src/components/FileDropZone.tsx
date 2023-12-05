@@ -7,14 +7,12 @@ function Dropzone() {
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [isHighlighted, setIsHighlighted] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { fileResponse, uploadError, uploadFile, isLoading, isSuccess } =
-    useFileUpload();
+  const { fileResponse, uploadFile } = useFileUpload();
 
   const handleFileUpload = async (file?: File) => {
     if (!file) {
       return;
     }
-    console.log(file);
     setCurrentFile(file);
 
     await uploadFile(file);
@@ -47,7 +45,7 @@ function Dropzone() {
       const file = Array.from(evt.target.files || [])[0];
       await handleFileUpload(file);
     },
-    []
+    [],
   );
 
   const dropZoneClasses = cx(
@@ -55,11 +53,10 @@ function Dropzone() {
       " justify-center text-neutral-400 text-lg leading-[175%]",
     {
       "!border-brand-primary-500 bg-brand-primary-200": isHighlighted,
-    }
+    },
   );
 
   if (currentFile) {
-    console.log(fileResponse);
     return (
       <ResumeValidationForm
         resumeFile={currentFile}

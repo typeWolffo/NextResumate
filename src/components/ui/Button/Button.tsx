@@ -19,7 +19,7 @@ const buttonStyles = cva(
     defaultVariants: {
       intent: "primary",
     },
-  }
+  },
 );
 
 export interface Props
@@ -38,7 +38,7 @@ export function Button({
   ...props
 }: Props) {
   const [loading, setLoading] = useState(false);
-  console.log({ loading });
+  const [error, setError] = useState<unknown>();
 
   const handleClick = useCallback(
     (e: MouseEvent) => {
@@ -46,14 +46,20 @@ export function Button({
         const result = onClick(e);
         if (result instanceof Promise) {
           setLoading(true);
-          result.finally(() => {
-            setLoading(false);
-          });
+          result
+            .catch((error) => setError(error))
+            .finally(() => {
+              setLoading(false);
+            });
         }
       }
     },
-    [onClick]
+    [onClick],
   );
+
+  if (error) {
+    throw error;
+  }
 
   return (
     <ButtonOrLink

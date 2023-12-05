@@ -9,18 +9,18 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { type UserRole } from "@/schema/user";
+import { type TUserRole } from "@/schema/user";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
-      role: UserRole;
+      role: TUserRole;
     } & DefaultSession["user"];
   }
 
   interface User {
-    role: UserRole;
+    role: TUserRole;
   }
 }
 

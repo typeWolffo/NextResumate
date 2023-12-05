@@ -6,7 +6,6 @@ import path from "path";
 import pdfParse from "pdf-parse";
 import { pipeline } from "stream";
 import { promisify } from "util";
-import { env } from "@/env.mjs";
 import { fetchResumeInformation } from "@/lib";
 
 const METHOD_ALLOWED = "POST";
@@ -32,7 +31,7 @@ async function saveFile(req: NextApiRequest): Promise<string> {
 
 async function processFile(
   filePath: string,
-  res: NextApiResponse
+  res: NextApiResponse,
 ): Promise<void> {
   const dataBuffer = await fs.readFile(filePath);
   const data = await pdfParse(dataBuffer);
@@ -41,9 +40,6 @@ async function processFile(
     const response = await fetchResumeInformation(data.text);
     res.send(response);
   } catch (error) {
-    if (env.NODE_ENV === "development") {
-      console.log(data.text);
-    }
     res.status(500).send({ message: "Server error", error });
   }
 
@@ -52,7 +48,7 @@ async function processFile(
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ): Promise<void> {
   if (req.method !== METHOD_ALLOWED) {
     return res.status(405).send("Method Not Allowed");

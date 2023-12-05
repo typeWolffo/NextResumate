@@ -15,8 +15,6 @@ function CandidatePreview({ id }: TProps) {
     id,
   });
 
-  console.log(candidateData);
-
   const candidateSkills = useMemo(() => {
     if (candidateData) {
       return getSkills(candidateData);
