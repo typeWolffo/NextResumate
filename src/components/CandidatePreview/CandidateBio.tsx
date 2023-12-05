@@ -2,7 +2,7 @@ import { useManagedUIContext } from "@/contexts/ManagedUiContext";
 import cx from "classnames";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Modal from "../Modal";
-import { isServer } from "@/helpers";
+import { isServer } from "src/lib";
 
 function ClientSideCandidateBio({ bio }: { bio: string }) {
   const { openModal } = useManagedUIContext();

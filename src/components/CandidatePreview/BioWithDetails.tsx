@@ -50,20 +50,22 @@ function BioWithDetails({ city, englishLvl, bio, github }: Props) {
           <ChevronIcon />
         </a>
 
-        <a
-          href={`https://www.google.com/maps/place/${prepareCityName(city)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex justify-between rounded-lg bg-neutral-100 p-4 hover:bg-neutral-200"
-        >
-          <div className="flex gap-2">
-            <PinIcon className="text-brand-primary-500" />
-            <h5 className="text-sm font-extrabold leading-normal tracking-[.12px] text-neutral-500">
-              {city}
-            </h5>
-          </div>
-          <ChevronIcon />
-        </a>
+        {city && (
+          <a
+            href={`https://www.google.com/maps/place/${prepareCityName(city)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex justify-between rounded-lg bg-neutral-100 p-4 hover:bg-neutral-200"
+          >
+            <div className="flex gap-2">
+              <PinIcon className="text-brand-primary-500" />
+              <h5 className="text-sm font-extrabold leading-normal tracking-[.12px] text-neutral-500">
+                {city}
+              </h5>
+            </div>
+            <ChevronIcon />
+          </a>
+        )}
 
         <div className="flex justify-between rounded-lg bg-neutral-100 p-4 hover:bg-neutral-200">
           <div className="flex gap-2">

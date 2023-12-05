@@ -9,6 +9,7 @@ import { api } from "@/utils/api";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { type AppType } from "next/app";
+import { Toaster } from "sonner";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -21,6 +22,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <FilterContext>
             <ManagedUIProvider>
               <Component {...pageProps} />
+              <Toaster richColors />
             </ManagedUIProvider>
           </FilterContext>
         </Layout>

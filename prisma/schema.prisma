@@ -1,17 +1,10 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Account {
@@ -60,23 +53,28 @@ model VerificationToken {
 }
 
 model Candidate {
-  id         Int               @id @default(autoincrement())
-  createdAt  DateTime          @default(now()) @map("created_at")
-  updatedAt  DateTime          @updatedAt @map("updated_at")
-  name       String
-  surname    String
-  bio        String
-  favourite  Boolean           @default(false)
-  englishLvl String
-  age        String
-  studies    String?
-  github     String
-  website    String
-  city       String
-  stars      Int?
-  points     Int?
-  status     String
-  skills     CandidateSkills[]
+  id                String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt         DateTime             @default(now()) @map("created_at")
+  updatedAt         DateTime             @updatedAt @map("updated_at")
+  name              String
+  surname           String
+  candidateId       Int                  @unique @default(autoincrement())
+  bio               String
+  favourite         Boolean              @default(false)
+  english_level     String
+  age               String
+  university        String
+  university_start  String
+  university_end    String
+  university_degree String
+  github_url        String
+  website_url       String
+  city              String
+  interests         CandidateInterests[]
+  stars             Int?
+  points            Int?
+  status            String
+  skills            CandidateSkills[]
 }
 
 model Skill {
@@ -86,10 +84,25 @@ model Skill {
 }
 
 model CandidateSkills {
-  candidateId Int
+  candidateId String    @db.Uuid
   skillId     Int
   candidate   Candidate @relation(fields: [candidateId], references: [id])
   skill       Skill     @relation(fields: [skillId], references: [id])
 
   @@id([candidateId, skillId])
+}
+
+model Interest {
+  id         Int                  @id @default(autoincrement())
+  name       String               @unique
+  candidates CandidateInterests[]
+}
+
+model CandidateInterests {
+  candidateId String    @db.Uuid
+  interestId  Int
+  candidate   Candidate @relation(fields: [candidateId], references: [id])
+  interest    Interest  @relation(fields: [interestId], references: [id])
+
+  @@id([candidateId, interestId])
 }

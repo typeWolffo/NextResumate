@@ -1,25 +1,47 @@
 import { prisma } from "@/server/db";
-import { type CandidateType } from "@/types/Candidate";
 import { faker } from "@faker-js/faker";
+import { type TCandidate } from "@/schema/candidate";
 
-const createCandidate: Promise<CandidateType[]> = new Promise(
+const createCandidate: Promise<TCandidate[]> = new Promise(
   (resolve, reject) => {
     const candidates = [];
     for (let i = 0; i < 10; i++) {
       const candidateShape = {
-        id: i,
         name: faker.person.firstName(),
         surname: faker.person.lastName(),
         bio: faker.lorem.paragraphs({ min: 2, max: 9 }),
         favourite: faker.datatype.boolean(),
-        englishLvl: i % 3 === 0 ? "B1" : i % 3 === 1 ? "A2" : "B2",
+        english_level:
+          i % 3 === 0 ? "Basic" : i % 3 === 1 ? "Intermediate" : "Fluent",
         age: String(faker.number.int({ min: 18, max: 50 })),
-        studies: faker.person.jobTitle(),
-        github: faker.internet.url(),
-        website: faker.internet.url(),
+        university: faker.person.jobArea(),
+        university_start: faker.date.past().toISOString(),
+        university_end: faker.date.future().toISOString(),
+        university_degree: faker.person.jobTitle(),
+        github_url: faker.internet.url(),
+        website_url: faker.internet.url(),
         city: faker.location.city(),
         stars: faker.number.int({ min: 0, max: 5 }),
         points: faker.number.int({ min: 20, max: 100 }),
+        interests: faker.helpers.arrayElements([
+          "Karate",
+          "Football",
+          "Basketball",
+          "Tennis",
+          "Golf",
+          "Swimming",
+          "Running",
+          "Cycling",
+          "Hiking",
+          "Skiing",
+          "Snowboarding",
+          "Surfing",
+          "Skateboarding",
+          "Sailing",
+          "Dancing",
+          "Singing",
+          "Playing guitar",
+        ]),
         status:
           i % 3 === 0
             ? "applied"
@@ -27,35 +49,31 @@ const createCandidate: Promise<CandidateType[]> = new Promise(
             ? "graded"
             : ("need_information" as "applied" | "need_information" | "graded"),
         skills: faker.helpers.arrayElements([
-          "React",
-          "Vue",
-          "Angular",
-          "Node",
-          "Express",
-          "MongoDB",
-          "PostgreSQL",
-          "TypeScript",
-          "JavaScript",
+          "Git",
           "HTML",
           "CSS",
-          "SASS",
-          "LESS",
+          "JavaScript",
+          "TypeScript",
+          "React",
+          "Next.js",
+          "Node.js",
+          "Express",
           "GraphQL",
           "Apollo",
           "Prisma",
-          "NestJS",
-          "NextJS",
-          "Gatsby",
-          "Jest",
-          "Cypress",
-          "Git",
-          "GitHub",
-          "Karate",
-          "Java",
-          "Cobol",
-          "C",
-          "Driving license Cat B",
-          "MS Office",
+          "PostgreSQL",
+          "MongoDB",
+          "Redis",
+          "Docker",
+          "Kubernetes",
+          "AWS",
+          "Azure",
+          "Google Cloud",
+          "Python",
+          "Django",
+          "Flask",
+          "Ruby",
+          "Ruby on Rails",
         ]),
       };
       candidates.push(candidateShape);
@@ -65,32 +83,44 @@ const createCandidate: Promise<CandidateType[]> = new Promise(
 );
 
 async function main() {
-  await createCandidate.then(async (candidates) => {
-    for (const candidate of candidates) {
-      const skillIds = [];
-      for (const skillName of candidate.skills) {
-        const skill = await prisma.skill.upsert({
-          where: { name: skillName },
-          update: {},
-          create: { name: skillName },
-        });
-        skillIds.push(skill.id);
-      }
-
-      await prisma.candidate.upsert({
-        where: { id: candidate.id },
+  const candidates = await createCandidate;
+  for (const candidate of candidates) {
+    const skillIds = [];
+    for (const skillName of candidate.skills) {
+      const skill = await prisma.skill.upsert({
+        where: { name: skillName },
         update: {},
-        create: {
-          ...candidate,
-          skills: {
-            create: skillIds.map((id) => ({
-              skillId: id,
-            })),
-          },
-        },
+        create: { name: skillName },
       });
+      skillIds.push(skill.id);
     }
-  });
+
+    const interestsIds = [];
+    for (const interestName of candidate.interests) {
+      const interest = await prisma.interest.upsert({
+        where: { name: interestName },
+        update: {},
+        create: { name: interestName },
+      });
+      interestsIds.push(interest.id);
+    }
+
+    await prisma.candidate.create({
+      data: {
+        ...candidate,
+        skills: {
+          create: skillIds.map((id) => ({
+            skillId: id,
+          })),
+        },
+        interests: {
+          create: interestsIds.map((id) => ({
+            interestId: id,
+          })),
+        },
+      },
+    });
+  }
 }
 
 main()

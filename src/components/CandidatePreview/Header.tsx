@@ -1,7 +1,8 @@
 import { Suspense } from "react";
+import { type TCandidate } from "@/schema/candidate";
 
 type Props = {
-  candidateId: number;
+  candidateId: TCandidate["candidateId"];
   candidateName: { first: string; last: string };
 };
 

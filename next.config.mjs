@@ -12,6 +12,8 @@ const config = {
     domains: ["picsum.photos"],
   },
   webpack(config) {
+    config.resolve.alias.canvas = false
+    config.resolve.alias.encoding = false
     const fileLoaderRule = config.module.rules.find(
       (/** @type {{ test: { test: (arg0: string) => any; }; }} */ rule) =>
         rule.test?.test?.(".svg")

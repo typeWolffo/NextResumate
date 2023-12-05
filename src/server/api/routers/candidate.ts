@@ -18,17 +18,22 @@ export const candidateRouter = createTRPCRouter({
   createCandidate: protectedProcedure
     .input(CandidateSchema)
     .mutation(({ ctx, input }) => {
+      if (!Array.isArray(input.skills)) throw new Error("Skills must be array");
+
       return ctx.prisma.candidate.create({
         data: {
           name: input.name,
           surname: input.surname,
           bio: input.bio,
           favourite: input.favourite,
-          englishLvl: input.englishLvl,
+          english_level: input.english_level,
           age: input.age,
-          studies: input.studies,
-          github: input.github,
-          website: input.website,
+          university: input.university,
+          university_start: input.university_start,
+          university_end: input.university_end,
+          university_degree: input.university_degree,
+          github_url: input.github_url,
+          website_url: input.website_url,
           city: input.city,
           stars: input.stars,
           status: input.status,
@@ -103,6 +108,8 @@ export const candidateRouter = createTRPCRouter({
   getCandidatesBySkill: publicProcedure
     .input(CandidateSchema.pick({ skills: true }))
     .query(({ ctx, input }) => {
+      if (!Array.isArray(input.skills)) throw new Error("Skills must be array");
+
       return ctx.prisma.candidate.findMany({
         where: {
           skills: {
@@ -158,7 +165,7 @@ export const candidateRouter = createTRPCRouter({
               },
             },
             {
-              englishLvl: {
+              english_level: {
                 contains: input.searchTerm,
                 mode: "insensitive",
               },
@@ -198,6 +205,8 @@ export const candidateRouter = createTRPCRouter({
   updateCandidate: protectedProcedure
     .input(CandidateSchema)
     .mutation(({ ctx, input }) => {
+      if (!Array.isArray(input.skills)) throw new Error("Skills must be array");
+
       return ctx.prisma.candidate.update({
         where: {
           id: input.id,
@@ -206,11 +215,14 @@ export const candidateRouter = createTRPCRouter({
           name: input.name,
           surname: input.surname,
           favourite: input.favourite,
-          englishLvl: input.englishLvl,
+          english_level: input.english_level,
           age: input.age,
-          studies: input.studies,
-          github: input.github,
-          website: input.website,
+          university: input.university,
+          university_start: input.university_start,
+          university_end: input.university_end,
+          university_degree: input.university_degree,
+          github_url: input.github_url,
+          website_url: input.website_url,
           city: input.city,
           stars: input.stars,
           status: input.status,
@@ -241,7 +253,7 @@ export const candidateRouter = createTRPCRouter({
    *
    */
   deleteCandidate: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .mutation(({ ctx, input }) => {
       return ctx.prisma.candidate.delete({
         where: {
